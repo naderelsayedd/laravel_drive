@@ -1,0 +1,13 @@
+npm install --save gh-pages
+
+
+"homepage": "https://myusername.github.io/repoName"
+
+
+"predeploy": "npm run build"
+
+
+"deploy": "gh-pages -d build"
+
+
+npm run deploy

@@ -1,0 +1,23 @@
+  $drive = Drive::find($id);
+        $drive->title = $request->title ;
+        $drive->description= $request->desc ;
+        // file data
+        $drive_data = $request->file("file");
+        dd($drive_data);
+        $oldFile = public_path('upload/drive/' .$drive->file);
+        if($drive_data == null){
+            $drive_name=$drive->file ;
+            $extensionData  =$drive->extension;
+        }else{
+            $drive_name =time() . $drive_data->getClientOriginalName();
+            $extensionData = $drive_data->getClientOriginalExtension();
+            $location  = public_path('./upload/drive');
+            $drive_data->move($location , $drive_name);
+            unlink($oldFile);
+        }
+        // upload
+        $drive->file = $drive_name ;
+        $drive->categoryID	 = $request->category ;
+        $drive->extension = $extensionData;
+        $drive->save();
+        return view('home')->with("done" , "File Updated");
